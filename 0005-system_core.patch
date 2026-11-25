@@ -1,20 +1,20 @@
 diff --git a/init/service.cpp b/init/service.cpp
-index 8127e70..6be06db 100644
+index a5334f4..dad36ec 100644
 --- a/init/service.cpp
 +++ b/init/service.cpp
-@@ -373,9 +373,9 @@ bool Service::Start() {
-         }
+@@ -374,9 +374,9 @@ bool Service::Start() {
          if (rc == 0 && scon == mycon) {
              ERROR("Service %s does not have a SELinux domain defined.\n", name_.c_str());
--            free(mycon);
--            free(fcon);
--            return false;
-+            //free(mycon);
-+            //free(fcon);
-+            //return false;
+             if (selinux_status_getenforce() > 0) {
+-                free(mycon);
+-                free(fcon);
+-                return false;
++                //free(mycon);
++                //free(fcon);
++                //return false;
+             }
          }
          free(mycon);
-         free(fcon);
 diff --git a/libcutils/Android.mk b/libcutils/Android.mk
 index 7a92253..c080b2d 100644
 --- a/libcutils/Android.mk
