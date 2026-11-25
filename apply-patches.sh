@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ../../../..
+#cd ../../../..
 cd frameworks/av
 git apply -v ../../device/meizu/m1710/patches/0001-frameworks_av.patch
 cd ../..
