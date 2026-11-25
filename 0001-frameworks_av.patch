@@ -483,7 +483,7 @@ index 900d418..c6f3916 100644
              return BBinder::onTransact(code, data, reply, flags);
      }
 diff --git a/media/libmedia/IAudioPolicyService.cpp b/media/libmedia/IAudioPolicyService.cpp
-index 2dd1611..05fc3e9 100644
+index b9a578e..2d90ee6 100644
 --- a/media/libmedia/IAudioPolicyService.cpp
 +++ b/media/libmedia/IAudioPolicyService.cpp
 @@ -76,6 +76,9 @@ enum {
@@ -517,26 +517,25 @@ index 2dd1611..05fc3e9 100644
      virtual bool isOffloadSupported(const audio_offload_info_t& info)
      {
          Parcel data, reply;
-@@ -1164,7 +1181,18 @@ status_t BnAudioPolicyService::onTransact(
-             delete[] descriptors;
+@@ -1173,6 +1190,18 @@ status_t BnAudioPolicyService::onTransact(
              return status;
          }
--
-+
-+#ifdef MTK_HARDWARE
+ 
++        #ifdef MTK_HARDWARE
 +        case SET_POLICYMANAGER_PARAMETERS: {
 +            CHECK_INTERFACE(IAudioPolicyService, data, reply);
-+            int par1 =data.readInt32();
-+            int par2 =data.readInt32();
-+            int par3 =data.readInt32();
-+            int par4 =data.readInt32();
-+            reply->writeInt32(SetPolicyManagerParameters(par1,par2,par3,par4));
++            int par1 = data.readInt32();
++            int par2 = data.readInt32();
++            int par3 = data.readInt32();
++            int par4 = data.readInt32();
++            reply->writeInt32(SetPolicyManagerParameters(par1, par2, par3, par4));
 +            return NO_ERROR;
 +        } break;
-+#endif
++        #endif
++
          case IS_OFFLOAD_SUPPORTED: {
              CHECK_INTERFACE(IAudioPolicyService, data, reply);
-             audio_offload_info_t info;
+             audio_offload_info_t info = {};
 diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
 index 92e2847..4856bec 100644
 --- a/media/libstagefright/ACodec.cpp
